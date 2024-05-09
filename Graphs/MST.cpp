@@ -13,9 +13,12 @@ vi liga;
 vi tam;
 
 int find(int x){
-    while (x != liga[x]) x = liga[x];
+  if(x == liga[x]){
     return x;
+  }
+  return liga[x] = find(liga[x]);
 }
+
 
 bool same(int a,int b){
     return find(a) == find(b);
