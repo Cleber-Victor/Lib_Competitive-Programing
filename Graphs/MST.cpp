@@ -47,7 +47,7 @@ int main(){
         tam.resize(n+1);
         for (int i = 1; i <= n; i++){
             liga[i] = i;
-            tam[i] = 0;
+            tam[i] = 1;
         }
         vector<pair<int,pii>>arestas;
         for(int i = 0; i < m; i++){
