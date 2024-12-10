@@ -22,6 +22,8 @@ ll bc(int n, int k){ // N choose K
   return fact[n] *ifact[k] % MOD * ifact[n-k] %MOD;
 }
 
+div = fexpll(div,MOD-2);  <- inverso modular div
+
 int main(){
   ios::sync_with_stdio(false);
   cin.tie(0);
