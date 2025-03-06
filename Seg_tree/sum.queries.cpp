@@ -11,9 +11,9 @@ typedef long long ll;
 const int N = 2e5+7;
 int original[N];
 ll seg[4*N];
+int n;
 
-
-void build (int l,  int r,  int idx){
+void build (int l =1,  int r = n, int idx=1){
   if (l == r){
     seg[idx] = original[l];
     return;
@@ -27,7 +27,7 @@ void build (int l,  int r,  int idx){
   seg[idx] = seg[left] + seg[right];
 }
 
-long long query(int ql,int qr,int l, int r, int idx){
+long long query(int ql,int qr,int l = 1, int r = n, int idx=1){
   if (ql > r || qr < l) return 0;
 
   if (ql <= l && qr >= r){ // o l,r tem que estar obrigatoriamente dentro do range da query para poder contribuir, se tiver duvida irei desehar o que contribui
@@ -42,7 +42,7 @@ long long query(int ql,int qr,int l, int r, int idx){
 
 }
 
-void update (int l, int r, int idx, int pos, long long val){
+void update (int pos, ll val, int l=1, int r=n, int idx=1){
 
   if (l == r){
     seg[idx] = val;
@@ -54,9 +54,9 @@ void update (int l, int r, int idx, int pos, long long val){
   int right = idx * 2 + 1;
 
   if (pos <= m){
-    update(l,m,left,pos,val);
+    update(pos,val,l,m,left);
   }else{
-    update(m+1,r,right,pos,val);
+    update(pos,val,m+1,r,right);
   }
 
   seg[idx] = seg[left] + seg[right];
@@ -65,22 +65,22 @@ void update (int l, int r, int idx, int pos, long long val){
 int main(){
   ios::sync_with_stdio(0);
   cin.tie(NULL);
-  cout.tie(NULL);
 
-  long long n,q; cin >> n >> q;
-  for(long long i = 1; i <= n; i++){
+  int q; cin >> n >> q;
+
+  for(int i = 1; i <= n; i++){
     cin >> original[i];  
   }
 
-  build(1,n,1);
+  build();
 
-  for(long long i = 1; i <= q; i++){
+  for(int i = 1; i <= q; i++){
     long long x,a,b;
     cin >> x >> a >>b;
     if (x == 1){
-      update(1,n,1,a,b);
+      update(a,b);
     }else{
-      cout << query(a,b, 1,n, 1) << '\n';
+      cout << query(a,b) << '\n';
     }
   }
   return 0;
