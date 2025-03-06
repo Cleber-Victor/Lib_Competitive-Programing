@@ -9,103 +9,105 @@ using namespace std;
 typedef long long ll;
 
 const int N = 2e5+7;
-int original[N];
-ll seg[4*N];
-ll lazy[4*N];
-bool has[4*N];
+const int LIM = 1e4 + 10;
 
-void propagate (ll no, ll i, ll j){
-  if (has[no]){
-    seg[no] += lazy[no] * (j - i + 1);
-    if(i != j){
-      has[2*no] = 1;
-      has[2*no +1] = 1;
-      lazy[2*no] += lazy[no];
-      lazy[2*no +1] += lazy[no];      
-    }
-    has[no] = 0;
-    lazy[no] = 0;
-  }
-}
+vector<ll> seg(4*N,0);
+vector<ll> lazy(4*N,0); // o valor inicial da lazy varia tambem de acordo com o problema, 
+vll ar;
+vi maxp(LIM,-1);
+vi sump(LIM,0);
+vll original(N,0);
+ll n;
 
-
-void build (ll l,  ll r,  ll idx){
+void build(int l=1, int r = n, int no =1){
   if (l == r){
-    seg[idx] = original[l];
+    seg[no] = original[l];
     return;
   }
   ll m = (l + r) / 2;
-  ll left = idx * 2 ;
-  ll right = idx * 2 + 1 ;
+  ll left = no * 2 ;
+  ll right = no * 2 + 1 ;
   build (l, m, left);
   build (m +1,r, right);
   
-  seg[idx] = seg[left] + seg[right];
+  seg[no] = seg[left] + seg[right];  
 }
 
-long long query(ll ql,ll qr,ll l, ll r, ll idx){
+void update_lazy(int no, int l, int r, ll v){
+  lazy[no] += v;  // essa atualização varia de acordo com o problema
+  seg[no] += ((r-l +1) * v);
+}
 
-  propagate(idx,l,r);
-  if (ql > r || qr < l) return 0;
+void propagate(int no, int l, int r) {
+  if (lazy[no]  == 0) return;
 
-  if (ql <= l && qr >= r){ // o l,r tem que estar obrigatoriamente dentro do range da query para poder contribuir, se tiver duvida irei desehar o que contribui
-
-    return seg[idx];
+  if(l!=r){
+    int m = (l + r) / 2;
+    update_lazy(2 * no, l, m, lazy[no]);
+    update_lazy(2 * no + 1, m + 1, r, lazy[no]);
   }
 
-  ll m = (l + r) / 2;
-  ll left = idx * 2 ;
-  ll right = idx * 2 + 1 ;
-
-  return query(ql,qr,l,m,left) + query(ql,qr,m+1,r,right);
-
+  lazy[no] = 0;
 }
 
-void update (ll idx, ll tl, ll tr,ll ul,ll ur, ll val){
+void update( int ul, int ur, ll v, int no =1, int l=1, int r=n){
 
-  if (ul > tr || ur < tl) return;
-
-  if (ul <= tl && ur >= tr){
-    has[idx] = 1;
-    lazy[idx] += val;
-    propagate(idx,tl,tr);
-     // o l,r tem que estar obrigatoriamente dentro do range da query para poder contribuir, se tiver duvida irei desehar o que contribui
+  if (r < ul || l > ur) return;
+  if (ul <= l && r <= ur) {
+    update_lazy(no, l, r, v);
     return;
   }
 
-  ll m = (tl + tr) / 2;
-  ll left = idx * 2 ;
-  ll right = idx * 2 + 1;
+  propagate(no, l, r);
 
-  update(left,tl, m,ul, ur, val);
-  update(right,m+1, tr,ul, ur, val);
-  
-  seg[idx] = seg[left] + seg[right];
+  int m = (l + r) / 2;
+  update( ul, ur, v,2 * no, l, m);
+  update( ul, ur, v, 2 * no + 1, m + 1, r);
+
+  seg[no] = seg[2 * no] + seg[2 * no + 1];  
 }
+
+
+
+ll query(int L, int R,int l = 1, int r = n, int no = 1){
+
+  propagate(no,l,r);
+  if(R < l || L > r) return 0;
+  if(L <= l && r <=R){
+    return seg[no];
+  }
+  int m = (l+r)/2;
+  int left = 2*no;
+	int right = 2*no+1;
+  ll saida  =query(L,R,l,m,left) + query(L,R,m+1,r,right);
+  return saida;
+}
+
 
 int main(){
   ios::sync_with_stdio(0);
   cin.tie(NULL);
   cout.tie(NULL);
-
-  long long n,q; cin >> n >> q;
-  for(long long i = 1; i <= n; i++){
-    cin >> original[i];  
+  int q;
+  cin >>n>>q;
+  for(int i = 1; i<= n;i++){
+    cin>>original[i];
   }
+  build();
 
-  build(1,n,1);
-
-  for(long long i = 1; i <= q; i++){
-    long long x,a,b,u,k;
-    cin >> x;
-    if (x == 1){
-      cin >> a >> b >>u;
-      update(1,1,n,a,b,u);
+  for(int i = 0; i < q;i++){
+    int ti; cin>>ti;
+    if(ti == 1){
+      ll a,b,x; cin >>a>>b>>x;
+      update(a,b,x);
     }else{
-      cin >> k;
-      long long aux = query(k,k, 1,n, 1);
-      cout << query(k,k, 1,n, 1) << '\n';
+      int k; cin >>k;
+      cout <<query(k,k)<<'\n';
     }
   }
+
+
+
+
   return 0;
 }
