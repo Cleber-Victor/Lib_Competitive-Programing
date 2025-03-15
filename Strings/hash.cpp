@@ -1,3 +1,6 @@
+const ll MOD1 = 131'807'699;
+const ll MOD2 =127'065'427;
+const ll base = 127; //127
 /*
 Some Big Prime Numbers:
 37'139'213
@@ -33,3 +36,4 @@ struct PolyHash{
     return (h1<<32LL) | h2;
   }
 };
+ 
