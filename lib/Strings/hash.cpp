@@ -1,6 +1,17 @@
+#include <bits/stdc++.h>
+
+using namespace std;
+#define pii pair<int, int>
+#define pll pair<long long, long long>
+#define vi vector<int>
+#define vll vector<long long>
+
+typedef long long ll;
+
 const ll MOD1 = 131'807'699;
 const ll MOD2 =127'065'427;
 const ll base = 127; //127
+const int MAXN = 1e5 + 5; // tamanho da string
 /*
 Some Big Prime Numbers:
 37'139'213

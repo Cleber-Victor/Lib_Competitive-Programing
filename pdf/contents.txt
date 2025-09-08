@@ -1,0 +1,60 @@
+$
+# First line is the divisor character used to separate the file name from it's title!!!
+# Don't change the first line!!!
+
+# Any line followed by a '#' character is ignored
+# Section headings must be in square brackets
+# Subsections within a section should follow the format:
+# (filename within code directory)(divisor character:$)(subsection title)
+# div character:$
+
+# If you add an '@' at the end of a file title, that file will not be hashed, even if use_hash is true.
+
+[graphs]
+../lib/graphs/Diksktra.cpp            $ Diksktra
+../lib/graphs/MST.cpp                 $ MST
+../lib/graphs/DijkstraGrid.cpp        $ DijkstraGrid
+../lib/graphs/toposort.cpp            $ toposort
+../lib/graphs/DijkstraCPHandbook.cpp  $ DijkstraCPHandbook
+../lib/graphs/bfs.cpp                 $ bfs
+../lib/graphs/bicolority.cpp          $ bicolority
+../lib/graphs/floydwarshal.cpp        $ floydwarshal
+
+[numbertheory]
+../lib/numbertheory/maxprime.cpp       $ maxprime
+../lib/numbertheory/MatrixExpo.cpp     $ MatrixExpo
+../lib/numbertheory/Sieve.cpp          $ Sieve
+../lib/numbertheory/BinomioNewton.cpp  $ BinomioNewton
+
+[teoremas]
+../lib/teoremas/Geometry.tex  $ Geometry
+../lib/teoremas/DP.tex        $ DP
+../lib/teoremas/Graph.tex     $ Graph
+../lib/teoremas/Math.tex      $ Math
+
+[seg]
+../lib/seg/sum.queries.cpp         $ sum
+../lib/seg/RangeUpdateQueries.cpp  $ RangeUpdateQueries
+
+[Strings]
+../lib/Strings/Manachor.cpp     $ Manachor
+../lib/Strings/AhoCorasick.cpp  $ AhoCorasick
+../lib/Strings/Z.cpp            $ Z
+../lib/Strings/hash.cpp         $ hash
+../lib/Strings/RabinKarp.cpp    $ RabinKarp
+
+[dp]
+../lib/dp/coincombination.cpp  $ coincombination
+../lib/dp/coin.cpp             $ coin
+../lib/dp/LIS.cpp              $ LIS
+../lib/dp/recupera.cpp         $ recupera
+../lib/dp/knapsack.cpp         $ knapsack
+../lib/dp/LCS.cpp              $ LCS
+
+[Geometry]
+../lib/Geometry/PointInside.cpp  $ PointInside
+../lib/Geometry/ch.cpp           $ ch
+
+
+## Extra content - tex files ##
+[Extra]
